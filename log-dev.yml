@@ -1,5 +1,5 @@
 user:
-  name: wyllss
+  name: wylls
 # ==Tomcat配置==
 server:
   port: 8090

@@ -1,0 +1,41 @@
+user:
+  name: wyll
+# ==Tomcat配置==
+server:
+  port: 8090
+  tomcat:
+    max-connections: 20000 # 最大连接数 表示有多少个socket连接到tomcat上 NIO模式下默认是10000
+    accept-count: 200 # 允许的最大连接数，即等待队列 应大于等于max-threads 默认值75
+    max-threads: 2000     # 最大连接线程数 默认值75
+    uri-encoding: UTF-8
+    accesslog:
+      enabled: true
+      directory: /Users/jiangbo/opt/xfc/logs/log/
+      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %D'
+eureka:
+  # 链接eureka的用户名密码
+  name: root
+  password: root
+  server-port: 8081
+  instance:
+    hostname: xfc-eureka-master
+    leaseRenewalIntervalInSeconds: 1     # 心跳时间，服务刷新时间，每隔这个时间会主动心跳一次，默认30s
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，这个配置一般为服务刷新时间配置的三倍
+    leaseExpirationDurationInSeconds: 3  # 发呆时间，服务过期时间，超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除，默认90s
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.name}:${eureka.password}@${eureka.instance.hostname}:${eureka.server-port}/eureka/
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    registry-fetch-interval-seconds: 1    # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    #Eureka服务注册中心也会尝试把自己当做客户端来注册自己，就会出现下面的错误
+spring:
+  application:
+    name: log-service
+# 使用spring security 保护 ai-app
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin@123

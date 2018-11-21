@@ -32,6 +32,11 @@ eureka:
 spring:
   application:
     name: log-service
+  rabbitmq:
+    host: 10.1.11.213
+    port: 5672
+    username: yyxk
+    password: Yyxk@2016
 # 使用spring security 保护 ai-app
 security:
   basic:
